@@ -2,6 +2,11 @@ package actions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginActions {
     WebDriver driver;
@@ -23,9 +28,12 @@ public class LoginActions {
     }
 
     public void logout() {
-        driver.findElement(menuButton).click();
-        try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-        driver.findElement(logoutLink).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement menuButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("react-burger-menu-btn")));
+        menuButton.click();
+
+        WebElement logoutLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("logout_sidebar_link")));
+        logoutLink.click();
     }
 }
 
